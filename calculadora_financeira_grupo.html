@@ -30,7 +30,6 @@
 
     Salário médio operador de silo: 20R$ / hora
     Redução do tempo de inspeção: 70% (Considerando apenas verificações esporádicas)
-    Estimativa de perdas: 3kg por tonelada (Considerando apenas perdas por falhas operacionais)
     */
     function calcularLucros(){
         let qtdSilos = Number(ipt_qtd_silos.value)
@@ -41,12 +40,14 @@
         // Premissas
         let custoSolucao = 3000
         let perdasEvitadasKgPorTonAno = 100 // Perdas totais estimadas em 15%, estimamos melhorar 10%: 10% * 1ton = 100kg
+        let reducaoPercentualInspecao = 0.7
+        let custoHora = 20
 
         // Custo total
         let custoTotal = custoSolucao * qtdSilos
 
         // Economia por reduzir a inspeção manual
-        let economiaInspecaoMensal = qtdSilos * tempoInspecao * 20 * 0.7 // Economia mensal 
+        let economiaInspecaoMensal = qtdSilos * tempoInspecao // Economia mensal 
         let economiaInspecaoAnual = economiaInspecaoMensal * 12 // Economia anual
 
         // Economia por perdas evitadas

@@ -47,7 +47,7 @@
         let custoTotal = custoSolucao * qtdSilos
 
         // Economia por reduzir a inspeção manual
-        let economiaInspecaoMensal = qtdSilos * tempoInspecao // Economia mensal 
+        let economiaInspecaoMensal = qtdSilos * tempoInspecao * reducaoPercentualInspecao * custoHora// Economia mensal 
         let economiaInspecaoAnual = economiaInspecaoMensal * 12 // Economia anual
 
         // Economia por perdas evitadas

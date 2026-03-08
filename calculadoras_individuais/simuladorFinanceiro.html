@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador financeiro</title>
+    <style>
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f4f6f9;
+        min-height: 100vh;
+        margin-left: 15px;
+    }
+
+    h1 {
+        margin-bottom: 20px;
+        color: #2c3e50;
+    }
+
+    .campo {
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+
+    input {
+        width: 20%;
+        padding: 8px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        text-align: center;
+    }
+
+    input:focus {
+        border-color: #27ae60;
+        outline: none;
+    }
+
+    button {
+        width: 25%;
+        margin-top: 15px;
+        padding: 10px;
+        background-color: #27ae60;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+    button:hover {
+        background-color: #219150;
+    }
+
+    #simularEco {
+        margin-top: 20px;
+        padding: 10px;
+        background-color: #ecfdf5;
+        border-radius: 5px;
+        color: #14532d;
+        font-size: 14px;
+    }
+</style>
+</head>
+<body>
+    <h1>Simulador financeiro</h1>
+        <h4>Atenção insira mais de 1 silo apenas se estes possuirem a mesma capacidade, caso contrário  realize o calculo separadamente</h4>
+            Digite a quantidade de silos que você tem: <input type="text" id="input_quantSilos">
+            <br>
+            <br>  
+            Digite a capacidade média por silo (Em toneladas): <input type="text" id="input_capacidadeMedia">
+            <br>
+            <br>
+            Digite o valor médio da tonelada do grão de milho: <input type="text" id="input_valorTonelada">
+            <br>
+            <br>
+            Digite o Percentual estimado de perda sem monitoramento (%): <input type="text" id="input_percentualPerda">
+            <br>
+            <br>
+            Digite o Custo estimado do sistema: <input type="text" id="input_custoSilo"> 
+            <br>
+            <br>
+            Digite a quantidade média de ciclos durante o ano: <input type="text" id="input_quantCiclos">
+            <br>
+            <br>
+            Digite a estimativa do tempo de inspeção manual (horas por mês): <input type="text" id="input_inpecaoManual">
+            <br>
+            <br>
+            <button onclick="simularEconomia()" id="">Simular economia</button>
+            <div id="simularEco"></div>
+          
+</body>
+</html>
+<script>
+            function simularEconomia() {
+                let quantSilos = Number(input_quantSilos.value)
+                let capacidadeMedia = Number(input_capacidadeMedia.value)
+                let valorTonelada = Number(input_valorTonelada.value)
+                let percentualPerda = Number(input_percentualPerda.value)
+                let quantCiclos = Number(input_quantCiclos.value) 
+                let custoSilo = input_custoSilo.value //Empresa que vai colocar, ou seja, será uma constante
+                let inspecaoManual = Number(input_inpecaoManual.value)
+                let economiaInspecao = inspecaoManual * 20 * 0.7 * quantSilos
+
+                let custoSistema = quantSilos * custoSilo
+
+                let capacidadeTotal = (capacidadeMedia) * (quantSilos) 
+                let perdaPorCiclo = (((capacidadeTotal) * (valorTonelada)) / 100 * (percentualPerda))// perda anual
+                //let perdaAtualMensal = perdaPorCiclo / 12 // perda mensal
+                let perdaAtualCiclo = perdaPorCiclo * quantCiclos // perda por ciclo
+
+                let custoSistemaPorCiclo = custoSistema / quantCiclos
+            
+                let economia = (perdaAtualCiclo - custoSistema) + economiaInspecao
+                let economiaPorCiclo = (perdaPorCiclo) - (custoSistemaPorCiclo) // Por enquanto inutil
+                let roi = (economia) / (custoSistema) * 100 // quanto que vale a pena fazer esse investimento?
+                let payback = 0
+                if (economiaPorCiclo > 0){
+                      payback = (custoSistema / economiaPorCiclo).toFixed(2)
+                } else {
+                      payback = 'Sem retorno'
+                }
+                // fazer condição do desconto
+                simularEco.innerHTML = `Economia anual: ${economia.toFixed(2)}<br>
+                Economia por ciclo ${economiaPorCiclo.toFixed(2)} <br>
+                ROI - Retorno sobre o investimento: ${roi.toFixed(2)}%<br>
+                Tempo de retorno: ${payback} meses`
+            }
+            
+</script>

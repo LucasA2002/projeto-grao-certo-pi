@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Financeira</title>
+
+    <style>
+    /* Como ainda não aprendemos CSS durante as disciplinas, comentei as funcionalidades de cada linha para demonstrar o que cada uma faz,
+    a fim de também manter a transparência, gostaria de salientar que para a confecção do css utilizei de meios de pesquisa quando foi necessário */
+
+
+    /* Aplica configurações para todos os elementos*/
+    * {
+        box-sizing: border-box; /* Faz largura e altura considerarem preenchimento e borda */
+        margin: 0; /* Remove margens padrão */
+        padding: 0; /* Remove espaçamentos padrão */
+        font-family: Arial, Helvetica, sans-serif; /* Define a fonte padrão da página, neste caso há uma preferência por Arial */
+    }
+
+    /* Estiliza o body da página */
+    body {
+        background: linear-gradient(135deg, #f4f7fb, #dfe9f3); /* Implementa fundo com degradê */
+        min-height: 100vh; /* Garante que a altura mínima seja igual à altura total da tela */
+        display: flex; /* Ativa o Flexbox (organiza elementos dentro de um container de forma dinâmica)*/
+        justify-content: center; /* Centraliza o conteúdo na horizontal */
+        align-items: center; /* Centraliza o conteúdo na vertical */
+        padding: 30px; /* Define o espaçamento interno nas bordas da tela */
+        color: #1f2937; /* Define a cor padrão do texto */
+    }
+
+    /* Caixa da calculadora */
+    .container {
+        background: #ffffff; /* Define o fundo branco */
+        width: 100%; /* Define a ocupação de toda a largura disponível */
+        max-width: 700px; /* Limita a largura máxima em 700px */
+        padding: 32px; /* Define preenchimento interno */
+        border-radius: 18px; /* Torna os cantos arredondados */
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12); /* Cria uma sombra da caixa */
+    }
+
+    /* Título */
+    h1 {
+        text-align: center; /* Centraliza o texto */
+        margin-bottom: 18px; /* Define o espaço abaixo do título */
+        color: #14532d; /* Define a cor verde escura */
+        font-size: 2rem; /* Define o tamanho da fonte (2rem sendo 32 pixels)*/
+    }
+
+    /* Parágrafo de instrução do cabeçalho */
+    p {
+        background: #ffffff; /* Define o fundo branco */
+        border-left: 5px solid #22c55e; /* Cria a barra verde da esquerda */
+        padding: 14px; /* Define o preenchimento interno */
+        border-radius: 10px; /* Torna os cantos arredondados */
+        margin-bottom: 24px; /* Define a margem abaixo do parágrafo */
+        line-height: 1.5; /* Define o espaçamento entre linhas */
+        font-size: 0.97rem; /* Define o tamanho da fonte */
+    }
+
+    /* Bloco individual de cada campo */
+    .campo {
+        margin-bottom: 18px; /* Espaço abaixo de cada campo */
+    }
+
+    /* Texto do label de cada input */
+    .campo label {
+        display: block; /* Faz o label ocupar a linha toda */
+        margin-bottom: 7px; /* Espaço entre label e input */
+        font-weight: bold; /* Deixa o texto em negrito */
+        color: #374151; /* Cor cinza escura */
+    }
+
+    /* Caixa de entrada */
+    .campo input {
+        width: 100%; /* Ocupa toda a largura disponível */
+        padding: 12px 14px; /* Espaçamento interno vertical e horizontal */
+        border: 1px solid #cbd5e1; /* Borda cinza clara */
+        border-radius: 10px; /* Cantos arredondados */
+        outline: none; /* Remove a borda padrão ao focar */
+        font-size: 1rem; /* Tamanho do texto */
+        transition: 0.2s; /* Suaviza mudanças visuais */
+    }
+
+    /* Estilo do input quando está selecionado */
+    .campo input:focus {
+        border-color: #22c55e; /* Muda a borda para verde */
+        box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.15); /* Cria um brilho ao redor */
+    }
+
+    /* Caixa de informação fixa do custo */
+    .info-fixa {
+        margin: 20px 0; /* Espaço em cima e embaixo */
+        padding: 12px 14px; /* Espaçamento interno */
+        background: #ecfdf5; /* Fundo verde bem claro */
+        border: 1px solid #bbf7d0; /* Borda verde clara */
+        border-radius: 10px; /* Cantos arredondados */
+        font-weight: bold; /* Texto em negrito */
+        color: #166534; /* Cor verde escura */
+    }
+
+    /* Botão */
+    button {
+        width: 100%; /* Ocupa toda a largura */
+        padding: 14px; /* Aumenta a área clicável */
+        border: none; /* Remove borda padrão */
+        border-radius: 12px; /* Cantos arredondados */
+        background: #16a34a; /* Fundo verde */
+        color: white; /* Texto branco */
+        font-size: 1rem; /* Tamanho da fonte */
+        font-weight: bold; /* Texto em negrito */
+        cursor: pointer; /* Mostra a mãozinha ao passar o mouse */
+        transition: 0.2s; /* Suaviza efeitos */
+    }
+
+    /* Efeito quando o mouse passa por cima do botão */
+    button:hover {
+        background: #15803d; /* Escurece o verde */
+        transform: translateY(-1px); /* Move levemente o botão para cima */
+    }
+
+    /* Caixa onde o resultado será exibido */
+    #id_mensagem {
+        margin-top: 24px; /* Espaço acima da caixa */
+        padding: 18px; /* Espaçamento interno */
+        background: #f8fafc; /* Fundo claro */
+        border-radius: 12px; /* Cantos arredondados */
+        border: 1px solid #e2e8f0; /* Borda leve */
+        line-height: 1.7; /* Espaçamento entre linhas */
+    }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Calculadora Financeira</h1>
+
+        <p>
+            Insira os dados para estimar em quanto tempo a solução começa a gerar lucros. <br><br>
+            <b>Atenção: Insira mais de 1 silo apenas se estes possuírem a mesma capacidade, caso contrário realize o cálculo separadamente.</b>
+        </p>
+
+        <div class="campo">
+            <label for="ipt_qtd_silos">Insira a quantidade de silos:</label>
+            <input type="text" id="ipt_qtd_silos">
+        </div>
+
+        <div class="campo">
+            <label for="ipt_cap_silos">Insira a capacidade do(s) silo(s) (em toneladas):</label>
+            <input type="text" id="ipt_cap_silos">
+        </div>
+
+        <div class="campo">
+            <label for="ipt_preco_milho">Insira o preço médio do milho (R$ por tonelada):</label>
+            <input type="text" id="ipt_preco_milho">
+        </div>
+
+        <div class="campo">
+            <label for="ipt_tempo_inspecao">Insira a estimativa do tempo de inspeção manual por silo (horas por mês):</label>
+            <input type="text" id="ipt_tempo_inspecao">
+        </div>
+
+        <div class="info-fixa">
+            Custo da solução (por silo): R$ 3000
+        </div>
+
+        <button onclick="calcularLucros()">Calcular Lucros</button>
+
+        <div id="id_mensagem"></div>
+    </div>
+</body>
+</html>
+
+<script>
+    /*
+    Considerações
+
+    Salário médio operador de silo: 20R$ / hora
+    Redução do tempo de inspeção: 70% (Considerando apenas verificações esporádicas)
+    Estimativa de perdas: 3kg por tonelada (Considerando apenas perdas por falhas operacionais)
+    */
+    function calcularLucros(){
+        let qtdSilos = Number(ipt_qtd_silos.value)
+        let capacidadeSilo = Number(ipt_cap_silos.value)
+        let precoMilho = Number(ipt_preco_milho.value)
+        let tempoInspecao = Number(ipt_tempo_inspecao.value)
+
+        // Premissas
+        let custoSolucao = 3000
+        let perdasEvitadasKgPorTonAno = 100 // Perdas totais estimadas em 15%, estimamos melhorar 10%: 10% * 1ton = 100kg
+
+        // Custo total
+        let custoTotal = custoSolucao * qtdSilos
+
+        // Economia por reduzir a inspeção manual
+        let economiaInspecaoMensal = qtdSilos * tempoInspecao * 20 * 0.7
+        let economiaInspecaoAnual = economiaInspecaoMensal * 12
+
+        // Economia por perdas evitadas
+        let perdasEvitadasAno = qtdSilos * capacidadeSilo * perdasEvitadasKgPorTonAno
+        let perdasEvitadasTonAno = perdasEvitadasAno / 1000
+        let economiaPerdasAnual = perdasEvitadasTonAno * precoMilho
+
+        // Economia total
+        let economiaTotalAnual = economiaInspecaoAnual + economiaPerdasAnual;
+        let economiaTotalMensal = (economiaTotalAnual / 12).toFixed();
+
+        // Payback
+        let paybackMeses = 0
+        if (economiaTotalMensal > 0){
+            paybackMeses = (custoTotal / economiaTotalMensal).toFixed()
+        }
+
+        // Lucro
+        let lucro12Meses = economiaTotalAnual - custoTotal;
+
+        id_mensagem.innerHTML = `
+        <br><b>Resultado</b><br>
+        <b>Custo total:</b> R$${custoTotal}<br>
+        <b>Economia anual (inspeção):</b> R$${economiaInspecaoAnual}<br>
+        <b>Economia anual (perdas evitadas):</b> R$${economiaPerdasAnual}<br>
+        <b>Economia anual total:</b> R$${economiaTotalAnual} (R$${economiaTotalMensal} / mês)<br>
+        <b>Payback estimado:</b> ${paybackMeses} meses<br>
+        <b>Lucro líquido em 12 meses:</b> R$${lucro12Meses}`
+    };
+</script>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Calculadora Financeira</title>
+</head>
+
+<body>
+
+<h2>Calculadora Matemática</h2>
+
+Número 1: <input type="text" id="input_n1"><br><br>
+Número 2: <input type="text" id="input_n2"><br><br>
+
+<button onclick="multiplicar()">Multiplicar</button>
+<button onclick="dividir()">Dividir</button>
+<button onclick="subtrair()">Subtrair</button>
+<button onclick="somar()">Somar</button>
+
+<br><br>
+
+<div id="div_mensagem"></div>
+
+<h2>Calculadora Financeira</h2>
+
+Receita (Venda): <input type="text" id="input_receita"><br><br>
+Custo: <input type="text" id="input_custo"><br><br>
+
+<button onclick="calcularLucro()">Calcular Lucro</button>
+<button onclick="calcularMargem()">Margem de Lucro</button>
+
+<br><br>
+
+<div id="div_financeiro"></div>
+
+</body>
+</html>
+
+<script>
+
+function multiplicar() {
+    let n1 = Number(input_n1.value)
+    let n2 = Number(input_n2.value)
+
+    div_mensagem.innerHTML = `Resultado: ${n1 * n2}`
+}
+
+function dividir() {
+    let n1 = Number(input_n1.value)
+    let n2 = Number(input_n2.value)
+
+    div_mensagem.innerHTML = `Resultado: ${n1 / n2}`
+}
+
+function subtrair() {
+    let n1 = Number(input_n1.value)
+    let n2 = Number(input_n2.value)
+
+    div_mensagem.innerHTML = `Resultado: ${n1 - n2}`
+}
+
+function somar() {
+    let n1 = Number(input_n1.value)
+    let n2 = Number(input_n2.value)
+
+    div_mensagem.innerHTML = `Resultado: ${n1 + n2}`
+}
+
+function calcularLucro() {
+
+    let receita = Number(input_receita.value)
+    let custo = Number(input_custo.value)
+
+    let lucro = receita - custo
+
+    div_financeiro.innerHTML = `Lucro obtido: R$ ${lucro}`
+}
+
+function calcularMargem() {
+
+    let receita = Number(input_receita.value)
+    let custo = Number(input_custo.value)
+
+    let lucro = receita - custo
+    let margem = (lucro / receita) * 100
+
+    div_financeiro.innerHTML = `Margem de lucro: ${margem.toFixed(2)}%`
+}
+
+</script>

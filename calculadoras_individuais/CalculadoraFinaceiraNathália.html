@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Calculadora Financeira</h1>
+
+    <h2>simulação de lucro<h2>
+
+    Ano  atual: <input type="text" id="inp_ano">
+    <br><br>
+    preço médio atual da saca de milho (60kg): <input type="text" id="inp_valor_atual">
+    <br><br>
+    valor da produção de uma saca de milho <input type="text" name="" id="inp_producao">
+    <br><br>
+    capacidade de armazenamento do silo (kg) <input type="text" name="" id="inp_capacidade">
+    <br><br>
+    porcentagem de preenchimento <input type="text" name="" id="inp_preenchimento">
+    <br><br>
+    numero do silo <input type="text" name="" id="inp_silos">
+    <br><br>
+<button onclick="calcular()">Calcular</button>
+<div id="resultado"></div>
+
+
+</body>
+</html>
+<script>
+    function calcular(){
+
+let Ano = Number(inp_ano.value);
+let ValorAtual = Number(inp_valor_atual.value);
+let ValorProducao = Number(inp_producao.value);
+let capacidade = Number(inp_capacidade.value);
+let preenchimento = Number(inp_preenchimento.value);
+let silos = Number(inp_silos.value);
+let quantidade = Number(capacidade * preenchimento / 100)
+let lucro = Number(ValorAtual - ValorProducao)
+let Total = 0
+
+if( silos <2){
+    let quantidade = Number(capacidade * preenchimento / 100)
+    let lucro = Number(ValorAtual - ValorProducao)
+    Total = Number(quantidade * lucro)
+
+}
+else{
+    let quantidade = Number(capacidade * preenchimento / 100)
+    let lucro = Number(ValorAtual - ValorProducao)
+    Total = Number(quantidade * lucro)
+}
+ resultado.innerHTML += `no Ano de ${Ano}, você pode ter um lucro de até R$${Total} no ${silos}º silo.<br><br>`
+}
+
+
+
+</script>
